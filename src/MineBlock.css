@@ -1,0 +1,33 @@
+.block {
+    display: flex;
+    height: calc(var(--spacing) * 10);
+    width: calc(var(--spacing) * 10);
+    background-color: #1a1a1a;
+    justify-content: center;
+    align-items: center;
+    margin: calc(var(--spacing) * 0.5);
+    border-width: 1px;
+    border-color: color-mix(
+      in oklch,
+      var(--colors-gray-400) var(--un-border-opacity),
+      transparent
+    );
+    font-size: 10;
+  }
+  .mine {
+    background-color: red;
+  }
+  .displayed {
+    color:green;
+  }
+  .normal {
+    background-color: #1a1a1a;
+  }
+  
+  .block:hover {
+    background-color: gray;
+  }
+  
+  .flagged {
+    background-color: yellow;
+  }
