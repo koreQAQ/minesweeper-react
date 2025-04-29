@@ -10,15 +10,27 @@ const numberColor = [
   'text-gold-500',
   'text-red-500',
 ]
-function MineBlock({ block, handleClick }) {
+function MineBlock({ block, handleClick, handleRightClick }) {
   function getBlockState() {
     if (block.revealed) return block.mine ? 'bg-red-600/10 text-red-600' : numberColor[block.adjacentMines]
     return block.flagged ? 'bg-gray-500/10 ' : 'bg-gray-500/10 hover:bg-gray-500/20'
   }
 
+
+  const content = () => {
+    if (block.flagged) {
+      return "o"
+    } else {
+      return block.revealed ? block.mine ? 'X' : block.adjacentMines : ' '
+    }
+  }
+
   return (
-    <button onClick={handleClick} className={"border-1 border-gray-500/10" + " " + getBlockState()}>
-      {block.revealed ? block.mine ? 'X' : block.adjacentMines : ' '}
+
+    <button onClick={handleClick} className={"border-1 border-gray-500/10" + " " + getBlockState()}
+      onContextMenu={handleRightClick}
+    >
+      {content()}
     </button>
   )
 }

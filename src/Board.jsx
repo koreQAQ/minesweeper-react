@@ -54,20 +54,52 @@ function Board({ width, height }) {
         }).filter(Boolean)
     }
     const [blocks, setBlocks] = useState(generateBlocks());
-    
+
+    const [finish, setFinish] = useState(false);
+
     function handleClick(block) {
+        if (finish) return
         block.revealed = true
         if (block.mine) {
-            console.log('ssss')
-            toggle()
+            done();
             return
         }
         expandZero(block)
+        checkState()
+    }
+
+    function done() {
+        setFinish(true);
+        const toggleBlocks = blocks.slice(0);
+        toggleBlocks.forEach((row) => { row.forEach(b => b.revealed = true); });
+        setBlocks(toggleBlocks);
+    }
+
+    function handleRightClick(block) {
+        if (finish) return
+        block.flagged = !block.flagged
+        setBlocks(blocks.slice())
+        checkState()
+    }
+
+    function checkState() {
+        // 1. 所有的炸弹都被标记了
+        const flatBlocks = blocks.flat()
+        if (flatBlocks.every(b => b.revealed || b.flagged)) {
+            if (flatBlocks.some(b => b.flagged && !b.mine)) {
+                alert('You cheat')
+                done()
+            }
+            else {
+                alert('You win')
+                done()
+            }
+        }
     }
 
     function expandZero(block) {
         // 0点要找到周边的0
-        if (!block.adjacentMines){   
+        if (!block.adjacentMines) {
             getSiblings(block, blocks).forEach((zero) => {
                 if (zero.revealed)
                     return
@@ -77,41 +109,42 @@ function Board({ width, height }) {
         }
         setBlocks(blocks.slice(0))
     }
-    
-    const [dev,setDev] = useState(false)
+
+    const [dev, setDev] = useState(false)
 
     function toggle() {
         setDev(!dev)
         const toggleBlocks = blocks.slice(0)
-        toggleBlocks.forEach((row) => {row.forEach(b => b.revealed = !b.revealed)})
+        toggleBlocks.forEach((row) => { row.forEach(b => b.revealed = !b.revealed) })
         setBlocks(toggleBlocks)
     }
 
     function reset() {
+        setFinish(false)
         setBlocks(generateBlocks())
     }
 
     const data = blocks.map(row => {
         const values = row.map(block => {
             return (
-                <MineBlock block={block} handleClick={() => handleClick(block)} key={block.id} />
+                <MineBlock block={block} handleClick={() => handleClick(block)} handleRightClick={() => handleRightClick(block)} key={block.id} />
             )
         }
         )
         return (<div className="row" >{values}</div>)
     })
-   
+
     return (
         <>
             <div className='board'>{data}</div>
             <div className="flex justify-center">
-                <button  className="border-transient w-20" onClick={toggle}>
+                <button className="border-transient w-20" onClick={toggle}>
                     {dev ? "DEV" : "NORMAL"}
                 </button>
                 <button className="border-transient w-20" onClick={reset}>
                     RESET
                 </button>
-                
+
             </div>
         </>
     )
