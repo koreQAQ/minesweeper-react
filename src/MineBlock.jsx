@@ -14,7 +14,7 @@ const numberColor = [
 ]
 function MineBlock({ block, handleClick, handleRightClick }) {
   function getBlockState() {
-    if (block.revealed) return block.mine ? 'bg-red-600/10 text-red-600' : numberColor[block.adjacentMines]
+    if (block.revealed) return block.mine ? 'bg-red-600/10 text-red-600' : numberColor[block.adjacentMines]+ " " + "font-bold"
     return block.flagged ? 'bg-gray-500/10 ' : 'bg-gray-500/10 hover:bg-gray-500/20'
   }
 
