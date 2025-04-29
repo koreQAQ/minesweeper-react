@@ -18,7 +18,6 @@ const directions = [
 
 
 function Board({ width, height }) {
-
     function getSiblings(block, blocks) {
         return directions.map(([dx, dy]) => {
             const ox = block.x + dx
@@ -56,30 +55,33 @@ function Board({ width, height }) {
 
     function handleClick(x, y) {
         const block = blocks[x][y]
-        if(block.mine){
+        if (block.mine) {
             console.log(`boom`)
             return
         }
-        if(!block.revealed){
-            block.revealed = true
-        }
-        expandZero(block)  
+        expandZero(block)
     }
 
     function expandZero(block) {
         // 返回已经修改过的board
         // 如果当前这个点不为0
+
         if (block.adjacentMines == 0) {
             // 0点要找到周边的0
             const siblings = getSiblings(block, blocks)
+            console.log(`siblings length: ${siblings.length}`)
             siblings.forEach((zero) => {
-                if (!zero.revealed){
+                if (!zero.revealed) {
                     zero.revealed = true
                     expandZero(zero)
                     const lastBlocks = blocks.slice(0)
                     setBlocks(lastBlocks)
-                } 
+                }
             })
+        } else {
+            if (!block.revealed) block.revealed = !block.revealed
+            const lastBlocks = blocks.slice(0)
+            setBlocks(lastBlocks)
         }
     }
 
