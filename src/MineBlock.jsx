@@ -1,4 +1,6 @@
 import './MineBlock.css'
+import { LiaFontAwesomeFlag } from "react-icons/lia";
+import { GiMineExplosion } from "react-icons/gi";
 const numberColor = [
   'text-transparent',
   'text-green-500',
@@ -19,9 +21,9 @@ function MineBlock({ block, handleClick, handleRightClick }) {
 
   const content = () => {
     if (block.flagged) {
-      return "o"
+      return <LiaFontAwesomeFlag />
     } else {
-      return block.revealed ? block.mine ? 'X' : block.adjacentMines : ' '
+      return block.revealed ? block.mine ? <GiMineExplosion /> : block.adjacentMines : ' '
     }
   }
 
