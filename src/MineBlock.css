@@ -1,3 +1,4 @@
+@import "tailwindcss";
 .block {
     display: flex;
     height: calc(var(--spacing) * 10);
