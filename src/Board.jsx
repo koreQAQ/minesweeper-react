@@ -58,7 +58,10 @@ function Board({ width, height }) {
     const [finish, setFinish] = useState(false);
 
     function handleClick(block) {
-        if (finish) return
+        if (finish) {
+            reset()
+            return
+        }
         block.revealed = true
         if (block.mine) {
             done();
@@ -71,7 +74,7 @@ function Board({ width, height }) {
     function done() {
         setFinish(true);
         const toggleBlocks = blocks.slice(0);
-        toggleBlocks.forEach((row) => { row.forEach(b => b.revealed = true); });
+        toggleBlocks.forEach((row) => { row.forEach(b => b.revealed = true) });
         setBlocks(toggleBlocks);
     }
 
