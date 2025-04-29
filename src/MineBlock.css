@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @layer base {
     button {
-        @apply flex w-10 h-10 m-0.5 justify-center items-center 
+        @apply flex w-10 h-10 m-0.5 justify-center items-center rounded-xs
     }
 }

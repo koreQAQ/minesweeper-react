@@ -140,11 +140,11 @@ function Board({ width, height }) {
     return (
         <>
             <div className='board'>{data}</div>
-            <div className="flex justify-center">
-                <button className="border-transient w-20" onClick={toggle}>
+            <div className="flex justify-center m-2 ">
+                <button className="border-transient w-30 bg-green-400/30 rounded-md" onClick={toggle}>
                     {dev ? "DEV" : "NORMAL"}
                 </button>
-                <button className="border-transient w-20" onClick={reset}>
+                <button className="border-transient w-20 bg-green-400/30 rounded-md" onClick={reset}>
                     RESET
                 </button>
 
